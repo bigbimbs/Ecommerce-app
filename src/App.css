@@ -49,3 +49,28 @@
   display: block;
   margin: auto;
 }
+.cart-img {
+  height: 100%;
+  width: 100px;
+}
+
+@media only screen and (min-width: 768px) {
+  .section-two {
+    grid-template-columns: auto auto auto;
+  }
+  .dropdown-menu {
+  width: 400px;
+}
+}
+@media only screen and (max-width: 767px) {
+  .section-two {
+    grid-template-columns: auto auto;
+  }
+  .dropdown-menu {
+  width: 200px;
+}
+.cart-img {
+  height: 100%;
+  width: 50px;
+}
+}
