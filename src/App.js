@@ -31,19 +31,21 @@ function App() {
   const productsListLoading = reduxState.productsListLoading;
 
   useEffect(() => {
-    dispatch(setProductItems(data && data.products ? data.products : ""));
-  }, [loading, data, dispatch]);
+    handleDatas();
+  }, [loading, data, productItems]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (
-        (productItems !== "" && productItems.length > 0 && data !== "") ||
-        undefined
-      ) {
-        dispatch({ type: "UPDATE_CART_PRICE", payload: data });
-      }
-    }, 3000);
-  }, [productItems, data]);
+  // useEffect(() => {
+  //   if (data !== "" && productItems.length > 0) {
+  //     dispatch({ type: "UPDATE_CART_PRICE", payload: productItems });
+  //   }
+  // }, [loading]);
+
+  const handleDatas = async () => {
+    await dispatch(setProductItems(data && data.products ? data.products : ""));
+    if (data !== "" && productItems.length > 0) {
+      dispatch({ type: "UPDATE_CART_PRICE", payload: productItems });
+    }
+  };
 
   const handleCartItems = (itemData) => {
     dispatch(setCartItems(itemData));

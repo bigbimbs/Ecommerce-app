@@ -59,6 +59,25 @@ export default function cart(cartItems = [], action) {
       cartItems = [...newArr];
       return cartItems;
     }
+    case "UPDATE_CART_PRICE": {
+      let newProducts = action.payload;
+      let updatedProducts = [];
+
+      for (let i = 0; i < cartItems.length; i++) {
+        for (let j = 0; j < newProducts.length; j++) {
+          if (cartItems[i].id === newProducts[j].id) {
+            console.log("cart", cartItems[i].price);
+            console.log("products", newProducts[j].id);
+            let newProductPrice = cartItems[i];
+            newProductPrice.price = newProducts[j].price;
+            // cartItems[i].price = newProducts[j].price;
+            updatedProducts.push(newProductPrice);
+          }
+        }
+      }
+      cartItems = updatedProducts;
+      return cartItems;
+    }
     default: {
       return cartItems;
     }

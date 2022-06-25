@@ -18,11 +18,10 @@ const Nav = () => {
   const currency = reduxState.getCurrency;
   // const productItems = reduxState.getProductItems;
   const [selectedCurr, setSelectedCurr] = useState("USD");
-  // const cartAmount =
-  //   cart.length > 0
-  //     ? cart.reduce((a, b) => parseInt(a) + parseInt(b.price * b.qty), 0)
-  //     : "";
-  // const [totalAmout, setTotalAmount] = useState(cartAmount);
+  const cartAmount =
+    cart.length > 0
+      ? cart.reduce((a, b) => parseInt(a) + parseInt(b.price * b.qty), 0)
+      : "";
 
   const handleCurrencySelect = (e) => {
     setSelectedCurr(e.target.value);
@@ -143,7 +142,7 @@ const Nav = () => {
                   );
                 })
               : "No items in cart"}
-            {/* <p>{cartLength > 0 ? `${currency} ${totalAmout}` : ""}</p> */}
+            <p>{cartLength > 0 ? `${currency} ${cartAmount}` : ""}</p>
           </div>
         </div>
       </div>
