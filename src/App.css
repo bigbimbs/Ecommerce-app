@@ -53,7 +53,10 @@
   height: 100%;
   width: 100px;
 }
-
+.brand-bg {
+  background: #e2e6e3;
+  padding: 100px 0px;
+}
 @media only screen and (min-width: 768px) {
   .section-two {
     grid-template-columns: auto auto auto;
@@ -62,15 +65,28 @@
   width: 400px;
 }
 }
+@media only screen and (max-width: 900px) {
+   .section-two {
+    padding: 40px;
+  }
+}
 @media only screen and (max-width: 767px) {
   .section-two {
     grid-template-columns: auto auto;
+    padding: 40px 20px;
   }
   .dropdown-menu {
   width: 200px;
-}
-.cart-img {
-  height: 100%;
-  width: 50px;
-}
+  }
+  .cart-img {
+    height: 100%;
+    width: 50px;
+  }
+  .section-one {
+    background: rgb(255, 255, 255);
+    padding: 48px 40px 24px 40px;
+  }
+  .section-one div select {
+    width: 300px;
+  }
 }

@@ -10,23 +10,23 @@ import setProductItems from "./redux/action/setProductItems";
 import setCartItems from "./redux/action/setCartItems";
 import "./App.css";
 
-const FILMS_QUERY = gql`
-  query Product {
-    products {
-      id
-      title
-      image_url
-      price(currency: USD)
-    }
-  }
-`;
 function App() {
-  const dispatch = useDispatch();
-  const { loading, err, data } = useQuery(FILMS_QUERY);
-  // console.log("loading", loading);
-  // console.log("error", err);
-  // console.log("data", data);
   const reduxState = useSelector((state) => state);
+  const currency = reduxState.getCurrency;
+
+  const dispatch = useDispatch();
+  const PRODUCTS_QUERY = gql`
+    query Product {
+      products {
+        id
+        title
+        image_url
+        price(currency: ${currency})
+      }
+    }
+  `;
+  const { loading, data } = useQuery(PRODUCTS_QUERY);
+
   const productItems = reduxState.getProductItems;
   const productsListLoading = reduxState.productsListLoading;
 
@@ -34,23 +34,34 @@ function App() {
     dispatch(setProductItems(data && data.products ? data.products : ""));
   }, [loading, data, dispatch]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (
+        (productItems !== "" && productItems.length > 0 && data !== "") ||
+        undefined
+      ) {
+        dispatch({ type: "UPDATE_CART_PRICE", payload: data });
+      }
+    }, 3000);
+  }, [productItems, data]);
+
   const handleCartItems = (itemData) => {
-    console.log("handleCartItems", itemData);
     dispatch(setCartItems(itemData));
   };
   return (
     <>
       <Nav />
       <SectionOne />
-      <SectionTwo>
-        {!productsListLoading && reduxState.getProductItems.length > 0 ? (
-          productItems.map((product) => {
+
+      {!productsListLoading && reduxState.getProductItems.length > 0 ? (
+        <SectionTwo>
+          {productItems.map((product) => {
             return (
               <div key={product.id}>
                 <Product
                   img={product.image_url}
                   title={product.title}
-                  price={product.price}
+                  price={product.price + " " + currency}
                 >
                   <button
                     className="btn btn-dark w-100"
@@ -61,11 +72,18 @@ function App() {
                 </Product>
               </div>
             );
-          })
-        ) : (
-          <h1 className="text-center">Loading!!!</h1>
-        )}
-      </SectionTwo>
+          })}
+        </SectionTwo>
+      ) : (
+        <div className="d-flex align-items-center justify-content-center w-100 brand-bg">
+          <div
+            className="spinner-border"
+            role="status"
+            aria-hidden="true"
+            style={{ width: "5rem", height: "5rem" }}
+          ></div>
+        </div>
+      )}
     </>
   );
 }
