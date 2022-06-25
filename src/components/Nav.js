@@ -142,7 +142,9 @@ const Nav = () => {
                   );
                 })
               : "No items in cart"}
-            <p>{cartLength > 0 ? `${currency} ${cartAmount}` : ""}</p>
+            <h3 className="fw-bold">
+              Total: {cartLength > 0 ? `${currency} ${cartAmount}` : ""}
+            </h3>
           </div>
         </div>
       </div>
